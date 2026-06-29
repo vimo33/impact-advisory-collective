@@ -23,17 +23,6 @@
   @keyframes rise { from { transform: translateY(20px); } to { transform: none; } }
   .iac-rise { animation: rise .9s cubic-bezier(.2,.7,.2,1) both; }
   @media (prefers-reduced-motion: reduce) { .iac-rise { animation: none; } }
-  /* mycelium — dim network that grows on scroll */
-  .iac-myc { position:fixed; inset:0; z-index:1; pointer-events:none; overflow:hidden; opacity:.5; }
-  .iac-myc svg { position:absolute; inset:0; width:100%; height:100%; display:block; }
-  .iac-myc-path { fill:none; stroke:#b5933e; stroke-width:1; stroke-linecap:round; stroke-dasharray:1; stroke-dashoffset:1; }
-  .iac-myc-node { fill:#c2a04e; opacity:0; animation: mycTwinkle 6s ease-in-out infinite; }
-  .iac-myc-node:nth-of-type(3n) { animation-duration:7.4s; animation-delay:.8s; }
-  .iac-myc-node:nth-of-type(3n+1) { animation-duration:5.4s; animation-delay:.3s; }
-  @keyframes mycSway { 0%,100% { transform:translate(0,0); } 50% { transform:translate(7px,-5px); } }
-  @keyframes mycTwinkle { 0%,100% { filter:drop-shadow(0 0 2px rgba(194,160,78,.35)); } 50% { filter:drop-shadow(0 0 5px rgba(194,160,78,.65)); } }
-  .iac-myc-sway { animation: mycSway 30s ease-in-out infinite; }
-  @media (prefers-reduced-motion: reduce) { .iac-myc-sway { animation:none; } .iac-myc-node { animation:none; } }
   a.iac-nav { color:#46504a; text-decoration:none; transition: color .2s; }
   a.iac-nav:hover { color:#1f2e25; }
   .iac-label { display:block; font-size:12px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:#7a6a3a; margin:0 0 7px; }
@@ -658,99 +647,6 @@ class Component extends DCLogic {
     };
   }
 }
-</script>
-<!-- ============ MYCELIUM — ambient gold network that draws in on scroll ============ -->
-<script>
-(function(){
-  if (window.__iacMyc) return; window.__iacMyc = true;
-  var NS = 'http://www.w3.org/2000/svg';
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function rnd(a,b){ return a + Math.random()*(b-a); }
-
-  function build(){
-    var W = 1440, H = 900;
-    var host = document.createElement('div');
-    host.className = 'iac-myc';
-    var svg = document.createElementNS(NS,'svg');
-    svg.setAttribute('viewBox','0 0 '+W+' '+H);
-    svg.setAttribute('preserveAspectRatio','xMidYMid slice');
-    var g = document.createElementNS(NS,'g');
-    g.setAttribute('class','iac-myc-sway');
-    svg.appendChild(g); host.appendChild(svg);
-
-    var paths = [], nodes = [];
-    // grow a gently curving, branching filament; record path strings + tip nodes in draw order
-    function grow(x, y, ang, len, depth){
-      if (depth <= 0 || len < 10) return;
-      var steps = Math.round(rnd(3,5)), cx = x, cy = y, ca = ang;
-      var d = 'M ' + x.toFixed(1) + ' ' + y.toFixed(1);
-      for (var s = 0; s < steps; s++){
-        ca += rnd(-0.45, 0.45);
-        var seg = len/steps;
-        var nx = cx + Math.cos(ca)*seg, ny = cy + Math.sin(ca)*seg;
-        var mx = cx + Math.cos(ca)*seg*0.5 + rnd(-7,7), my = cy + Math.sin(ca)*seg*0.5 + rnd(-7,7);
-        d += ' Q ' + mx.toFixed(1) + ' ' + my.toFixed(1) + ' ' + nx.toFixed(1) + ' ' + ny.toFixed(1);
-        cx = nx; cy = ny;
-      }
-      paths.push(d); nodes.push([cx, cy]);
-      var branches = depth > 2 ? 2 : 1;
-      for (var b = 0; b < branches; b++){
-        if (Math.random() < 0.82) grow(cx, cy, ca + rnd(-0.8, 0.8), len*rnd(0.55, 0.78), depth-1);
-      }
-    }
-    // seeds rooted in the left/right margins (and top/bottom), growing inward — keeps the centre calmer
-    var seeds = [], i;
-    for (i=0;i<4;i++) seeds.push([rnd(-30,90),    rnd(80,H-80), rnd(-0.5,0.5)]);
-    for (i=0;i<4;i++) seeds.push([rnd(W-90,W+30), rnd(80,H-80), Math.PI+rnd(-0.5,0.5)]);
-    seeds.push([rnd(280,W-280), -20,  Math.PI/2]);
-    seeds.push([rnd(280,W-280), H+20, -Math.PI/2]);
-    seeds.forEach(function(s){ grow(s[0], s[1], s[2], rnd(130,210), 4); });
-
-    var pathEls = [];
-    paths.forEach(function(d){
-      var p = document.createElementNS(NS,'path');
-      p.setAttribute('class','iac-myc-path'); p.setAttribute('d', d); p.setAttribute('pathLength','1');
-      g.appendChild(p); pathEls.push(p);
-    });
-    var nodeEls = [];
-    nodes.forEach(function(n){
-      var c = document.createElementNS(NS,'circle');
-      c.setAttribute('class','iac-myc-node');
-      c.setAttribute('cx', n[0].toFixed(1)); c.setAttribute('cy', n[1].toFixed(1));
-      c.setAttribute('r', rnd(1.6,2.6).toFixed(1));
-      g.appendChild(c); nodeEls.push(c);
-    });
-    document.body.appendChild(host);
-
-    var N = pathEls.length;
-    if (reduce){
-      pathEls.forEach(function(p){ p.style.strokeDashoffset = '0'; });
-      nodeEls.forEach(function(c){ c.style.opacity = '0.7'; });
-      return;
-    }
-    // draw each filament across its slice of the scroll range; reveal its tip node as it completes
-    var END = 0.82, WIN = 0.16;
-    function update(){
-      var max = (document.documentElement.scrollHeight - window.innerHeight) || 1;
-      var sp = Math.min(1, Math.max(0, window.scrollY / max));
-      for (var i=0;i<N;i++){
-        var start = (i/N)*END;
-        var local = Math.min(1, Math.max(0, (sp - start)/WIN));
-        pathEls[i].style.strokeDashoffset = (1 - local).toFixed(3);
-        if (nodeEls[i]) nodeEls[i].style.opacity = (local*0.75).toFixed(2);
-      }
-    }
-    var ticking = false;
-    function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(function(){ update(); ticking = false; }); } }
-    window.addEventListener('scroll', onScroll, {passive:true});
-    window.addEventListener('resize', onScroll, {passive:true});
-    update();
-    [300,900,1800].forEach(function(t){ setTimeout(update, t); }); // content height settles after React mounts
-  }
-
-  if (document.readyState !== 'loading') build();
-  else document.addEventListener('DOMContentLoaded', build);
-})();
 </script>
 </body>
 </html>
