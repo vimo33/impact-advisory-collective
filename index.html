@@ -59,6 +59,11 @@
   .iac-textlink { transition:color .2s ease; }
   .iac-textlink:hover { color:#d8bd76 !important; }
   .iac-nav-burger:hover { background:rgba(255,255,255,.72) !important; }
+  /* execution-gap layout */
+  .iac-gap { display:grid; grid-template-columns:1fr 1.1fr; gap:36px 64px; align-items:center; grid-template-areas:"text bridge" "quote bridge"; }
+  .iac-gap-text { grid-area:text; }
+  .iac-gap-bridge { grid-area:bridge; height:440px; display:flex; align-items:center; justify-content:center; }
+  .iac-gap-quote { grid-area:quote; max-width:485px; justify-self:start; margin:0; }
   /* ---------- responsive ---------- */
   .iac-nav-burger { display:none; align-items:center; justify-content:center; width:44px; height:44px; border:1px solid rgba(31,46,37,.2); border-radius:7px; background:rgba(255,255,255,.45); color:#1f2e25; cursor:pointer; padding:0; }
   .iac-mobile-menu { display:none; }
@@ -86,6 +91,9 @@
     .iac-modal { padding:34px 24px !important; max-height:94vh !important; }
     .iac-form2 { grid-template-columns:1fr !important; }
     .iac-footer { flex-direction:column !important; gap:14px !important; align-items:flex-start !important; }
+    .iac-gap { grid-template-columns:1fr !important; grid-template-areas:"text" "bridge" "quote" !important; gap:30px !important; }
+    .iac-gap-bridge { height:300px !important; }
+    .iac-gap-quote { max-width:none !important; }
   }
   @media (max-width: 460px) {
     .iac-proof { grid-template-columns:1fr !important; }
@@ -172,19 +180,19 @@
 
   <!-- ============ SECTION 2 — THE EXECUTION GAP ============ -->
   <section id="gap" style="background:#ece4d3;">
-    <div class="iac-pad iac-stack" style="max-width:1280px; margin:0 auto; padding:92px 48px; display:grid; grid-template-columns:1fr 1.1fr; gap:64px; align-items:center;">
-      <div>
+    <div class="iac-pad iac-gap" style="max-width:1280px; margin:0 auto; padding:92px 48px;">
+      <div class="iac-gap-text">
         <div style="font-size:13px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:#94793c; margin-bottom:22px;">The execution gap</div>
         <h2 class="iac-h2" style="font-family:Spectral,serif; font-weight:400; font-size:44px; line-height:1.08; color:#1f2e25; margin:0; letter-spacing:-0.01em;">Commitments are public. Delivery is where risk begins.</h2>
         <p style="font-size:16.5px; line-height:1.65; color:#4a5349; margin:26px 0 0; max-width:460px;">Many organisations have already made the right commitments: net-zero targets, nature-positive mandates, impact theses, CSRD and SFDR roadmaps. The challenge is no longer intent.</p>
         <p style="font-size:16.5px; line-height:1.65; color:#4a5349; margin:16px 0 0; max-width:460px;">It is whether the system can deliver — whether governance is clear, data is reliable, incentives are aligned, teams are capable, and progress can be measured with confidence.</p>
-        <blockquote style="margin:36px 0 0; position:relative; border-radius:6px; overflow:hidden; background:#22392c url(uploads/quote-card.png?v=2) top left / cover; box-shadow:0 24px 54px -28px rgba(31,46,37,.6);">
-          <p style="margin:0; padding:80px 44px 40px; font-family:Spectral,serif; font-style:italic; font-size:22px; line-height:1.42; color:#f4f0e7; max-width:560px;">We help close the distance between what has been committed and what can actually be delivered.</p>
-        </blockquote>
       </div>
-      <div style="position:relative; height:440px; display:flex; align-items:center; justify-content:center;">
+      <div class="iac-gap-bridge">
         <img src="uploads/bridge.png?v=2" alt="A gold bridge spanning the gap between two cliffs" style="width:100%; height:100%; object-fit:contain; mix-blend-mode:darken;">
       </div>
+      <blockquote class="iac-gap-quote" style="position:relative; border-radius:6px; overflow:hidden; background:#22392c url(uploads/quote-card.png?v=2) top left / cover; box-shadow:0 24px 54px -28px rgba(31,46,37,.6);">
+        <p style="margin:0; padding:80px 44px 40px; font-family:Spectral,serif; font-style:italic; font-size:22px; line-height:1.42; color:#f4f0e7; max-width:560px;">We help close the distance between what has been committed and what can actually be delivered.</p>
+      </blockquote>
     </div>
   </section>
 
@@ -332,8 +340,9 @@
   </section>
 
   <!-- ============ SECTION 8 — WHY US ============ -->
-  <section id="why" style="background:#ece4d3;">
-    <div class="iac-pad iac-stack" style="max-width:1280px; margin:0 auto; padding:92px 48px; display:grid; grid-template-columns:.85fr 1.15fr; gap:56px; align-items:start;">
+  <section id="why" style="background:#ece4d3; position:relative; overflow:hidden;">
+    <img src="uploads/howwework.png?v=2" alt="" aria-hidden="true" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; transform:scaleX(-1);">
+    <div class="iac-pad iac-stack" style="max-width:1280px; margin:0 auto; padding:92px 48px; position:relative; display:grid; grid-template-columns:.85fr 1.15fr; gap:56px; align-items:start;">
       <div>
         <div style="font-size:13px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:#94793c; margin-bottom:20px;">Why us</div>
         <h2 class="iac-h2" style="font-family:Spectral,serif; font-weight:400; font-size:42px; line-height:1.06; color:#1f2e25; margin:0; letter-spacing:-0.01em;">Accountable for outcomes, not reports.</h2>
