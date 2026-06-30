@@ -30,8 +30,35 @@
   .iac-field:focus { border-color:#c2a04e; box-shadow:0 0 0 3px rgba(194,160,78,.16); background:#fbf9f2; }
   .iac-field::placeholder { color:#a09e8c; }
   select.iac-field { appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a6a3a' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>"); background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; }
-  .iac-submit { transition: background .15s; }
-  .iac-submit:hover { background:#16241b; }
+  .iac-submit { transition: background .2s ease, transform .2s cubic-bezier(.2,.7,.2,1), box-shadow .2s ease; }
+  .iac-submit:hover { background:#16241b; transform:translateY(-2px); box-shadow:0 14px 28px -12px rgba(22,36,27,.5); }
+  /* ---------- hover / interaction states ---------- */
+  .iac-press { transition: transform .2s cubic-bezier(.2,.7,.2,1), box-shadow .22s ease, background-color .2s ease, color .2s ease, border-color .2s ease; }
+  .iac-cta-gold:hover { background:#cfac57 !important; transform:translateY(-2px); box-shadow:0 13px 26px -10px rgba(150,118,44,.6) !important; }
+  .iac-cta-gold:active { transform:translateY(0); }
+  .iac-cta-green:hover { background:#284734 !important; transform:translateY(-2px); box-shadow:0 16px 30px -12px rgba(31,51,39,.55) !important; }
+  .iac-cta-green:active { transform:translateY(0); }
+  .iac-arrowlink { transition:color .2s ease; }
+  .iac-arrowlink .iac-arw { display:inline-block; transition:transform .22s cubic-bezier(.2,.7,.2,1); }
+  .iac-arrowlink:hover { color:#1f3327; }
+  .iac-arrowlink:hover .iac-arw { transform:translateX(5px); }
+  .iac-round { transition:background-color .2s ease, color .2s ease, border-color .2s ease, transform .2s ease; }
+  .iac-round:hover { background:#1f3327 !important; color:#f4f0e7 !important; border-color:#1f3327 !important; }
+  .iac-pill { transition:background-color .2s ease, border-color .2s ease, color .2s ease, transform .2s ease; }
+  .iac-pill:hover { border-color:#1f3327 !important; transform:translateY(-1px); }
+  .iac-person { transition:background-color .2s ease, padding-left .2s ease, box-shadow .2s ease; border-radius:7px; }
+  .iac-person:hover { background:#f1ebdc; padding-left:12px !important; box-shadow:inset 3px 0 0 0 #c2a04e; }
+  .iac-person .iac-arw { display:inline-block; transition:transform .2s ease, opacity .2s ease; opacity:.55; }
+  .iac-person:hover .iac-arw { transform:translateX(4px); opacity:1; }
+  .iac-mapnode:hover { transform:translate(-50%,-50%) scale(1.09) !important; box-shadow:0 14px 28px rgba(31,51,39,.3) !important; border-color:#c2a04e !important; }
+  .iac-maplabel:hover { color:#1f3327 !important; }
+  .iac-close { transition:background-color .2s ease, transform .28s cubic-bezier(.2,.7,.2,1); }
+  .iac-close:hover { background:#ece4d3 !important; transform:rotate(90deg); }
+  .iac-linkedin { transition:background-color .2s ease, color .2s ease; }
+  .iac-linkedin:hover { background:#1f3327 !important; color:#f4f0e7 !important; }
+  .iac-textlink { transition:color .2s ease; }
+  .iac-textlink:hover { color:#d8bd76 !important; }
+  .iac-nav-burger:hover { background:rgba(255,255,255,.72) !important; }
   /* ---------- responsive ---------- */
   .iac-nav-burger { display:none; align-items:center; justify-content:center; width:44px; height:44px; border:1px solid rgba(31,46,37,.2); border-radius:7px; background:rgba(255,255,255,.45); color:#1f2e25; cursor:pointer; padding:0; }
   .iac-mobile-menu { display:none; }
@@ -80,7 +107,7 @@
           <a class="iac-nav" href="#work">How We Work</a>
           <a class="iac-nav" href="#challenges">Challenges</a>
         </div>
-        <a href="#contact" onClick="{{ openContact }}" style="font-size:14px; font-weight:600; color:#1f3327; background:#c2a04e; padding:11px 20px; border-radius:2px; text-decoration:none; cursor:pointer;">Discuss an execution challenge</a>
+        <a href="#contact" onClick="{{ openContact }}" class="iac-press iac-cta-gold" style="font-size:14px; font-weight:600; color:#1f3327; background:#c2a04e; padding:11px 20px; border-radius:2px; text-decoration:none; cursor:pointer;">Discuss an execution challenge</a>
       </div>
       <button class="iac-nav-burger" onClick="{{ toggleNav }}" aria-label="Menu">
         <sc-if value="{{ navClosed }}" hint-placeholder-val="{{ true }}"><span style="display:inline-flex; width:21px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" style="width:100%;"><path d="M3 6h18M3 12h18M3 18h18"/></svg></span></sc-if>
@@ -94,7 +121,7 @@
         <a class="iac-nav" onClick="{{ closeNav }}" href="#collective" style="padding:14px 2px; font-size:16px; font-weight:500; border-bottom:1px solid rgba(31,46,37,.07);">The Collective</a>
         <a class="iac-nav" onClick="{{ closeNav }}" href="#work" style="padding:14px 2px; font-size:16px; font-weight:500; border-bottom:1px solid rgba(31,46,37,.07);">How We Work</a>
         <a class="iac-nav" onClick="{{ closeNav }}" href="#challenges" style="padding:14px 2px; font-size:16px; font-weight:500; border-bottom:1px solid rgba(31,46,37,.07);">Challenges</a>
-        <a href="#contact" onClick="{{ openContactFromNav }}" style="margin-top:16px; text-align:center; font-size:15px; font-weight:600; color:#1f3327; background:#c2a04e; padding:14px 20px; border-radius:3px; text-decoration:none;">Discuss an execution challenge</a>
+        <a href="#contact" onClick="{{ openContactFromNav }}" class="iac-press iac-cta-gold" style="margin-top:16px; text-align:center; font-size:15px; font-weight:600; color:#1f3327; background:#c2a04e; padding:14px 20px; border-radius:3px; text-decoration:none;">Discuss an execution challenge</a>
       </div>
     </sc-if>
   </nav>
@@ -113,8 +140,8 @@
           <p style="font-size:18px; line-height:1.6; color:#46504a; max-width:520px; margin:28px 0 0;">Impact Advisory Collective helps foundations, family offices and impact funds turn ambitious sustainability and nature-positive commitments into governed, financed, measurable action.</p>
           <p style="font-size:15.5px; line-height:1.65; color:#3f4a42; max-width:520px; margin:16px 0 0;">We bring together senior practitioners across sustainable finance, nature capital, legal and regulatory implementation, AI and data, circular systems, communications, governance and organisational change — to help you move from commitment to durable impact.</p>
           <div style="display:flex; align-items:center; gap:26px; margin-top:38px;">
-            <a href="#contact" onClick="{{ openContact }}" style="font-size:15px; font-weight:600; color:#f4f0e7; background:#1f3327; padding:16px 28px; border-radius:2px; text-decoration:none; box-shadow:0 16px 34px -16px rgba(31,51,39,.5); cursor:pointer;">Discuss an execution challenge</a>
-            <a href="#collective" style="font-size:15px; font-weight:600; color:#1f3327; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">Meet the collective <span style="color:#c2a04e;">&#8594;</span></a>
+            <a href="#contact" onClick="{{ openContact }}" class="iac-press iac-cta-green" style="font-size:15px; font-weight:600; color:#f4f0e7; background:#1f3327; padding:16px 28px; border-radius:2px; text-decoration:none; box-shadow:0 16px 34px -16px rgba(31,51,39,.5); cursor:pointer;">Discuss an execution challenge</a>
+            <a href="#collective" class="iac-arrowlink" style="font-size:15px; font-weight:600; color:#1f3327; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">Meet the collective <span class="iac-arw" style="color:#c2a04e;">&#8594;</span></a>
           </div>
         </div>
       </div>
@@ -176,7 +203,7 @@
             <span style="font-size:12.5px; color:#5a6358; background:#efeadb; border:1px solid #e3dcca; padding:5px 11px; border-radius:99px;">Deployment-readiness diagnostics</span>
             <span style="font-size:12.5px; color:#5a6358; background:#efeadb; border:1px solid #e3dcca; padding:5px 11px; border-radius:99px;">Impact measurement &amp; reporting</span>
           </div>
-          <a href="#challenges" style="font-size:14px; font-weight:600; color:#2c4d39; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">Where we help <span style="color:#c2a04e;">&#8594;</span></a>
+          <a href="#challenges" class="iac-arrowlink" style="font-size:14px; font-weight:600; color:#2c4d39; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">Where we help <span class="iac-arw" style="color:#c2a04e;">&#8594;</span></a>
         </div>
         <div style="background:#fbf9f2; border:1px solid #e3dcca; border-radius:4px; padding:42px 40px;">
           <div style="width:58px; height:58px; border-radius:50%; background:#1f3327; color:#e7ddc4; display:flex; align-items:center; justify-content:center; padding:15px; margin-bottom:26px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21c0-7 4-13 14-14 0 9-5 14-14 14Z"/><path d="M5 21C9 15 13 12 18 11"/></svg></div>
@@ -187,7 +214,7 @@
             <span style="font-size:12.5px; color:#5a6358; background:#efeadb; border:1px solid #e3dcca; padding:5px 11px; border-radius:99px;">MRV &amp; impact KPI systems</span>
             <span style="font-size:12.5px; color:#5a6358; background:#efeadb; border:1px solid #e3dcca; padding:5px 11px; border-radius:99px;">Investor-grade reporting</span>
           </div>
-          <a href="#challenges" style="font-size:14px; font-weight:600; color:#2c4d39; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">Where we help <span style="color:#c2a04e;">&#8594;</span></a>
+          <a href="#challenges" class="iac-arrowlink" style="font-size:14px; font-weight:600; color:#2c4d39; text-decoration:none; display:inline-flex; align-items:center; gap:8px;">Where we help <span class="iac-arw" style="color:#c2a04e;">&#8594;</span></a>
         </div>
       </div>
       <p style="text-align:center; font-size:14.5px; color:#7a8278; margin:34px 0 0;">We also support corporates, B-Corps, financial institutions, SMEs and public-sector actors where the mandate requires senior, cross-functional execution.</p>
@@ -222,18 +249,18 @@
           <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
             <div style="font-size:12.5px; font-weight:600; letter-spacing:.1em; color:#94793c;">{{ clusterIndex }}</div>
             <div style="display:flex; gap:8px;">
-              <button onClick="{{ prevCluster }}" style="width:32px; height:32px; border-radius:50%; border:1px solid #d9d2c0; background:#f4f0e7; color:#2c4d39; cursor:pointer; font-size:15px; line-height:1;">&#8592;</button>
-              <button onClick="{{ nextCluster }}" style="width:32px; height:32px; border-radius:50%; border:1px solid #d9d2c0; background:#f4f0e7; color:#2c4d39; cursor:pointer; font-size:15px; line-height:1;">&#8594;</button>
+              <button onClick="{{ prevCluster }}" class="iac-round" style="width:32px; height:32px; border-radius:50%; border:1px solid #d9d2c0; background:#f4f0e7; color:#2c4d39; cursor:pointer; font-size:15px; line-height:1;">&#8592;</button>
+              <button onClick="{{ nextCluster }}" class="iac-round" style="width:32px; height:32px; border-radius:50%; border:1px solid #d9d2c0; background:#f4f0e7; color:#2c4d39; cursor:pointer; font-size:15px; line-height:1;">&#8594;</button>
             </div>
           </div>
           <h3 style="font-family:Spectral,serif; font-weight:500; font-size:25px; line-height:1.18; color:#1f2e25; margin:6px 0 8px;">{{ cluster.label }}</h3>
           <p style="font-size:14.5px; line-height:1.55; color:#5a6358; margin:0 0 22px;">{{ cluster.tagline }}</p>
           <div style="display:flex; flex-direction:column; gap:4px; margin-bottom:18px;">
             <sc-for list="{{ cluster.members }}" as="m" hint-placeholder-count="3">
-              <button onClick="{{ m.open }}" style="display:flex; align-items:center; gap:14px; background:none; border:none; border-top:1px solid #ece5d6; padding:13px 4px; cursor:pointer; text-align:left; width:100%;">
+              <button onClick="{{ m.open }}" class="iac-person" style="display:flex; align-items:center; gap:14px; background:none; border:none; border-top:1px solid #ece5d6; padding:13px 4px; cursor:pointer; text-align:left; width:100%;">
                 <span style="width:42px; height:42px; border-radius:50%; background:#23402f; color:#d8bd76; display:flex; align-items:center; justify-content:center; font-family:Spectral,serif; font-size:15px; flex-shrink:0;">{{ m.i }}</span>
                 <span style="flex:1;"><span style="display:block; font-size:15px; font-weight:600; color:#1f2e25;">{{ m.n }}</span><span style="display:block; font-size:12.5px; color:#7a8278; margin-top:1px;">{{ m.r }}</span></span>
-                <span style="color:#c2a04e; font-size:13px;">&#8594;</span>
+                <span class="iac-arw" style="color:#c2a04e; font-size:13px;">&#8594;</span>
               </button>
             </sc-for>
           </div>
@@ -287,7 +314,7 @@
       <p style="font-size:16px; line-height:1.65; color:#4a5349; max-width:600px; margin:0 0 30px;">These are the first execution challenges we are exploring with partners. Filter by who you are.</p>
       <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:36px;">
         <sc-for list="{{ filters }}" as="f" hint-placeholder-count="5">
-          <button onClick="{{ f.onClick }}" style="{{ f.style }}">{{ f.label }}</button>
+          <button onClick="{{ f.onClick }}" class="iac-pill" style="{{ f.style }}">{{ f.label }}</button>
         </sc-for>
       </div>
       <div class="iac-cards" style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
@@ -330,12 +357,12 @@
       <div>
         <h2 class="iac-h2lg" style="font-family:Spectral,serif; font-weight:300; font-size:50px; line-height:1.05; color:#f4f0e7; margin:0; letter-spacing:-0.015em;">Where is execution <span style="font-style:italic; color:#d8bd76;">stalling?</span></h2>
         <p style="font-size:17px; line-height:1.6; color:#bcc7bf; margin:24px 0 0; max-width:480px;">Bring us the commitment, mandate or impact thesis that needs to become real. We will help identify where the system is strong, where delivery risk is hidden, and what it takes to move from ambition to accountable action.</p>
-        <a href="#contact" onClick="{{ openContact }}" style="display:inline-block; margin-top:34px; font-size:15px; font-weight:600; color:#1a2c21; background:#c2a04e; padding:16px 30px; border-radius:2px; text-decoration:none; cursor:pointer;">Discuss an execution challenge</a>
+        <a href="#contact" onClick="{{ openContact }}" class="iac-press iac-cta-gold" style="display:inline-block; margin-top:34px; font-size:15px; font-weight:600; color:#1a2c21; background:#c2a04e; padding:16px 30px; border-radius:2px; text-decoration:none; cursor:pointer;">Discuss an execution challenge</a>
       </div>
       <div style="display:flex; flex-direction:column; gap:22px;">
         <div style="display:flex; align-items:center; gap:14px; color:#e7ddc4;">
           <span style="width:24px; color:#c2a04e;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
-          <a href="mailto:hello@impactadvisorycollective.com" style="font-size:16px; color:#e7ddc4; text-decoration:none;">hello@impactadvisorycollective.com</a>
+          <a href="mailto:hello@impactadvisorycollective.com" class="iac-textlink" style="font-size:16px; color:#e7ddc4; text-decoration:none;">hello@impactadvisorycollective.com</a>
         </div>
         <div style="display:flex; align-items:center; gap:14px; color:#bcc7bf;">
           <span style="width:24px; color:#c2a04e;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
@@ -347,7 +374,7 @@
     <div style="border-top:1px solid rgba(207,178,89,.16); position:relative;">
       <div class="iac-padx iac-footer" style="max-width:1280px; margin:0 auto; padding:24px 48px; display:flex; justify-content:space-between; align-items:center; font-size:13px; color:#7e8b80;">
         <span>© 2026 Impact Advisory Collective</span>
-        <span style="display:flex; gap:24px;"><a href="#home" style="color:#7e8b80; text-decoration:none;">Privacy</a><a href="#home" style="color:#7e8b80; text-decoration:none;">Imprint</a></span>
+        <span style="display:flex; gap:24px;"><a href="#home" class="iac-textlink" style="color:#7e8b80; text-decoration:none;">Privacy</a><a href="#home" class="iac-textlink" style="color:#7e8b80; text-decoration:none;">Imprint</a></span>
       </div>
     </div>
   </section>
@@ -356,7 +383,7 @@
   <sc-if value="{{ member }}" hint-placeholder-val="{{ false }}">
     <div onClick="{{ closeMember }}" class="iac-overlay" style="position:fixed; inset:0; z-index:100; background:rgba(20,32,25,.55); backdrop-filter:blur(3px); display:flex; align-items:center; justify-content:center; padding:32px;">
       <div onClick="{{ stop }}" class="iac-modal" style="background:#fbf9f2; border-radius:6px; max-width:560px; width:100%; max-height:92vh; overflow:auto; padding:44px 46px; position:relative; box-shadow:0 30px 80px rgba(0,0,0,.4);">
-        <button onClick="{{ closeMember }}" style="position:absolute; top:20px; right:20px; width:34px; height:34px; border-radius:50%; border:1px solid #e3dcca; background:#f4f0e7; color:#4a5349; cursor:pointer; font-size:16px; line-height:1;">&#10005;</button>
+        <button onClick="{{ closeMember }}" class="iac-close" style="position:absolute; top:20px; right:20px; width:34px; height:34px; border-radius:50%; border:1px solid #e3dcca; background:#f4f0e7; color:#4a5349; cursor:pointer; font-size:16px; line-height:1;">&#10005;</button>
         <div style="display:flex; align-items:center; gap:18px; margin-bottom:24px;">
           <span style="width:66px; height:66px; border-radius:50%; background:#23402f; color:#d8bd76; display:flex; align-items:center; justify-content:center; font-family:Spectral,serif; font-size:23px; flex-shrink:0;">{{ member.i }}</span>
           <div>
@@ -367,7 +394,7 @@
         <div style="font-size:13px; color:#7a8278; margin-bottom:18px; padding-bottom:18px; border-bottom:1px solid #ece5d6;">{{ member.o }}</div>
         <p style="font-size:15px; line-height:1.66; color:#46504a; margin:0 0 26px;">{{ member.b }}</p>
         <sc-if value="{{ member.l }}" hint-placeholder-val="{{ false }}">
-          <a href="{{ member.l }}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:9px; font-size:14px; font-weight:600; color:#1f3327; border:1px solid #1f3327; padding:11px 20px; border-radius:2px; text-decoration:none;">
+          <a href="{{ member.l }}" target="_blank" rel="noopener" class="iac-linkedin" style="display:inline-flex; align-items:center; gap:9px; font-size:14px; font-weight:600; color:#1f3327; border:1px solid #1f3327; padding:11px 20px; border-radius:2px; text-decoration:none;">
             <span style="width:17px;"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0 0-5zM3 9h4v12H3zM10 9h3.8v1.7h.05c.53-.95 1.84-1.95 3.78-1.95 4.04 0 4.79 2.5 4.79 5.76V21h-4v-5.3c0-1.26-.02-2.9-1.78-2.9-1.78 0-2.05 1.38-2.05 2.8V21h-4z"/></svg></span>
             Connect on LinkedIn
           </a>
@@ -380,7 +407,7 @@
   <sc-if value="{{ contactOpen }}" hint-placeholder-val="{{ false }}">
     <div onClick="{{ closeContact }}" class="iac-overlay" style="position:fixed; inset:0; z-index:110; background:rgba(20,32,25,.58); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; padding:32px;">
       <div onClick="{{ stop }}" class="iac-modal" style="background:#fbf9f2; border-radius:8px; max-width:580px; width:100%; max-height:92vh; overflow:auto; padding:44px 46px; position:relative; box-shadow:0 38px 96px rgba(0,0,0,.44);">
-        <button onClick="{{ closeContact }}" style="position:absolute; top:18px; right:18px; width:34px; height:34px; border-radius:50%; border:1px solid #e3dcca; background:#f4f0e7; color:#4a5349; cursor:pointer; font-size:16px; line-height:1;">&#10005;</button>
+        <button onClick="{{ closeContact }}" class="iac-close" style="position:absolute; top:18px; right:18px; width:34px; height:34px; border-radius:50%; border:1px solid #e3dcca; background:#f4f0e7; color:#4a5349; cursor:pointer; font-size:16px; line-height:1;">&#10005;</button>
 
         <sc-if value="{{ showContactForm }}" hint-placeholder-val="{{ true }}">
           <div>
@@ -430,7 +457,7 @@
             </div>
             <h3 style="font-family:Spectral,serif; font-weight:500; font-size:26px; line-height:1.2; color:#1f2e25; margin:0 0 10px;">Thank you{{ contactNameSuffix }} &#8212; message received.</h3>
             <p style="font-size:15px; line-height:1.6; color:#5a6358; margin:0 auto 26px; max-width:410px;">We&#8217;ll review where execution is stalling and come back to you with the right senior operating partners for the conversation.</p>
-            <button onClick="{{ closeContact }}" style="font-family:Archivo,sans-serif; font-size:14px; font-weight:600; color:#1f3327; background:#c2a04e; border:none; padding:13px 26px; border-radius:3px; cursor:pointer;">Close</button>
+            <button onClick="{{ closeContact }}" class="iac-press iac-cta-gold" style="font-family:Archivo,sans-serif; font-size:14px; font-weight:600; color:#1f3327; background:#c2a04e; border:none; padding:13px 26px; border-radius:3px; cursor:pointer;">Close</button>
           </div>
         </sc-if>
 
@@ -506,8 +533,8 @@ class Component extends DCLogic {
       const nx = C.x + nodeR*Math.cos(a), ny = C.y + nodeR*Math.sin(a);
       const lx = C.x + labelR*Math.cos(a), ly = C.y + labelR*Math.sin(a);
       const active = i === ci;
-      kids.push(React.createElement('button', { key:'nd'+i, onClick:()=>this.setState({cluster:i}), style:{ position:'absolute', left:nx, top:ny, transform:'translate(-50%,-50%)', width:78, height:78, borderRadius:'50%', cursor:'pointer', border: active ? '1.5px solid #c2a04e' : '1px solid #d9d2c0', background: active ? '#1f3327' : '#fbf9f2', color: active ? '#d8bd76' : '#3f5a48', display:'flex', alignItems:'center', justifyContent:'center', padding:19, boxShadow: active ? '0 10px 24px rgba(31,51,39,.24)' : '0 2px 8px rgba(0,0,0,.05)', transition:'all .25s' } }, this.icoEl(cl.icon)));
-      kids.push(React.createElement('div', { key:'lb'+i, onClick:()=>this.setState({cluster:i}), style:{ position:'absolute', left:lx, top:ly, transform:'translate(-50%,-50%)', width:132, textAlign:'center', fontFamily:'Archivo,sans-serif', fontSize:11.5, lineHeight:1.3, letterSpacing:'.02em', color: active ? '#1f3327' : '#828a7e', fontWeight: active ? 700 : 500, cursor:'pointer' } }, cl.short));
+      kids.push(React.createElement('button', { key:'nd'+i, className:'iac-mapnode', onClick:()=>this.setState({cluster:i}), style:{ position:'absolute', left:nx, top:ny, transform:'translate(-50%,-50%)', width:78, height:78, borderRadius:'50%', cursor:'pointer', border: active ? '1.5px solid #c2a04e' : '1px solid #d9d2c0', background: active ? '#1f3327' : '#fbf9f2', color: active ? '#d8bd76' : '#3f5a48', display:'flex', alignItems:'center', justifyContent:'center', padding:19, boxShadow: active ? '0 10px 24px rgba(31,51,39,.24)' : '0 2px 8px rgba(0,0,0,.05)', transition:'all .25s' } }, this.icoEl(cl.icon)));
+      kids.push(React.createElement('div', { key:'lb'+i, className:'iac-maplabel', onClick:()=>this.setState({cluster:i}), style:{ position:'absolute', left:lx, top:ly, transform:'translate(-50%,-50%)', width:132, textAlign:'center', fontFamily:'Archivo,sans-serif', fontSize:11.5, lineHeight:1.3, letterSpacing:'.02em', color: active ? '#1f3327' : '#828a7e', fontWeight: active ? 700 : 500, cursor:'pointer' } }, cl.short));
     });
     return React.createElement('div', { style:{ position:'relative', width:580, height:500, margin:'0 auto', maxWidth:'100%' } }, kids);
   }
